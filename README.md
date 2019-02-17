@@ -8,7 +8,7 @@ include_once('pastefs.php');
 
 $pastefs = new PasteFS('API_KEY');
 $pastefs->setText("text that needs to be posted goes here");
-$content = $pastefs->post();
+$pasteInfo = $pastefs->post();
 
 $pasteInfo = json_decode( $pasteInfo );
 $pasteIdInfo = json_decode( base64_decode( $pasteInfo->packinfo ));
