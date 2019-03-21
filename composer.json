@@ -1,0 +1,13 @@
+{
+    "name": "aureagle/php-pastefs-post",
+    "description": "PasteFS content posting using PasteFS api (php)",
+    "type": "library",
+    "license": "GNU",
+    "authors": [
+        {
+            "name": "Aurangzeb",
+            "email": "aureagle@gmail.com"
+        }
+    ],
+    "require": {}
+}
