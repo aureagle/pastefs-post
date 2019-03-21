@@ -9,5 +9,6 @@
             "email": "aureagle@gmail.com"
         }
     ],
-    "require": {}
+    "require": {},
+    "minimum-stability": "dev"
 }
