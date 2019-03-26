@@ -70,21 +70,24 @@ class PasteFS {
 
 	/**
 	post the paste to the server with all text and added attachments
+	@return see sendViaCurl
 	*/
 	public function post() {
-		$this->sendViaCurl();
+		return $this->sendViaCurl();
 	}
 
 	/**
 	post the paste to the server with all text and added attachments
+	@return see sendViaCurl
 	*/
 	public function send() {
-		$this->sendViaCurl();
+		return $this->sendViaCurl();
 	}
 
 	/**
 	function to post the paste using curl, this should be the last function that is called after creating the paste
 	posts to server via curl
+	@return response from the server on success, FALSE on failure
 	*/
 	private function sendViaCurl() {
 		$ch = curl_init();
