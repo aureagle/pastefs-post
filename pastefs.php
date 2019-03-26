@@ -11,6 +11,10 @@ class PasteFS {
 	private $pastefs_url = 'https://www.pastefs.com';
 	private $num_attachments = 0;
 
+	/**
+	construct the PasteFS post
+	@param api_key (string) api_key for posting content to pastefs
+	*/
 	public function __construct( $api_key ) {
 		$this->params = [
 		'api_key' => $api_key,
@@ -23,17 +27,66 @@ class PasteFS {
 		];
 	}
 
+	/**
+	set content rating of the paste
+	@param rating (string) can be one of 'nsfw' and 'family_safe'
+	@return true on success, false otherwise
+	*/
+	public function setContentRating( $rating ) {
+		if( !in_array( $rating, ['nsfw', 'family_safe'] )) return false;
+		$this->params['content_rating'] = $rating;
+		return true;
+	}
+
+	/**
+	sets visibility of the post
+	@param visibility (string) can be one of 'public', 'unlisted' and 'private'
+	@return true of value successfully set, false on error
+	*/
+	public function setVisibility( $visibility ) {
+		if( !in_array( $visibility, ['private', 'unlisted', 'public' ] )) return false;
+		$this->params['visibility'] = $visibility;
+		return true;
+	}
+
+	/**
+	sets text to be posted
+	@param text (string/binary) text to be posted
+	*/
 	public function setText( $text ) {
 		$this->params['post_text'] = $text;
 	}
 
+	/**
+	add attachment to the post
+	@param filepath (string) path to file to be posted
+	@param mime (string) mime type of the file ex: video/mp4
+	*/
 	public function addAttachment( $filepath, $mime ) {
 		$this->params["filecontent[{$this->num_attachments}]"] = curl_file_create( $filepath );
 		$this->params["filecontent[{$this->num_attachments}]"]->mime = $mime;
 		$this->num_attachments ++;
 	}
 
+	/**
+	post the paste to the server with all text and added attachments
+	*/
 	public function post() {
+		$this->sendViaCurl();
+	}
+
+	/**
+	post the paste to the server with all text and added attachments
+	*/
+	public function send() {
+		$this->sendViaCurl();
+	}
+
+	/**
+	function to post the paste using curl, this should be the last function that is called after creating the paste
+	posts to server via curl
+	*/
+	private function sendViaCurl() {
 		$ch = curl_init();
 		curl_setopt( $ch, CURLOPT_HTTPHEADER, [
 			'Content-Type' => 'multipart/form-data'
